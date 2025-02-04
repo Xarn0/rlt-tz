@@ -2,18 +2,33 @@
 import elementInventory from "./components/element-inventory.vue";
 import detailsInfo from "@/components/details-info.vue";
 import closeIcon from "@/components/icon/close.vue";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 
 const window = ref(false);
 
 const data = reactive({ param: { color: "", quantity: 0 } });
 
-// interface boards {
+const setCookie = (name, value, days = 7) => {
+	const expires = new Date();
+	expires.setDate(expires.getDate() + days);
+	document.cookie = `${name}=${encodeURIComponent(
+		JSON.stringify(value)
+	)}; expires=${expires.toUTCString()}; path=/`;
+};
 
-//   color: string;
-//   quantity: number[];
-// }
-
+const getCookie = (name) => {
+	const cookies = document.cookie.split("; ");
+	const foundCookie = cookies.find((row) => row.startsWith(name + "="));
+	return foundCookie
+		? JSON.parse(decodeURIComponent(foundCookie.split("=")[1]))
+		: null;
+};
+onMounted(() => {
+	const savedItems = getCookie("myArray");
+	if (savedItems) {
+		board.value = savedItems;
+	}
+});
 let board = ref(Array(25).fill({ color: null, quantity: 0 }));
 board.value[0] = {
 	color: "#394932",
@@ -57,6 +72,7 @@ const drop = (event, index) => {
 			board.value.splice(index, 0, item);
 
 			draggedItem.value = null;
+			setCookie("myArray", board.value);
 		}
 	}
 };

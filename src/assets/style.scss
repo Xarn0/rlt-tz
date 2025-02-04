@@ -186,6 +186,8 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	z-index: 0;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
 
 	&__close {
 		z-index: 2;
@@ -287,8 +289,6 @@ body {
 		background: #262626;
 		backdrop-filter: blur(100px);
 	}
-	border-top-right-radius: 12px;
-	border-bottom-right-radius: 12px;
 }
 .dialog {
 	input {
