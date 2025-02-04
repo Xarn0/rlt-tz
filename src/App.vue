@@ -1,47 +1,69 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import elementInventory from "./components/element-inventory.vue";
+import detailsInfo from "@/components/details-info.vue";
+import closeIcon from "@/components/icon/close.vue";
+import { ref, reactive } from "vue";
+
+const window = ref(false);
+const data = reactive({ param: { color: "", quantity: 0 } });
+
+function name(params: any) {
+	if (params.color != "" && params.quantity != "") {
+		window.value = true;
+		data.param = params;
+		return data;
+	}
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+	<div class="container inventory">
+		<div class="inventory__profile">
+			<div class="inventory__image">
+				<img src="./assets/img/Blur.png" alt="" />
+			</div>
+			<ul>
+				<li class="hide"></li>
+				<li class="hide"></li>
+				<li class="hide"></li>
+				<li class="hide"></li>
+				<li class="hide"></li>
+				<li class="hide"></li>
+			</ul>
+		</div>
+		<div class="inventory__list">
+			<detailsInfo
+				:window="window"
+				:data="data.param"
+				@close-window="
+					() => {
+						window = false;
+					}
+				"
+			></detailsInfo>
+			<ul class="board">
+				<elementInventory
+					@click-by="(n) => name(n)"
+					color="#7faa65"
+					:quantity="21"
+				></elementInventory>
+				<elementInventory
+					@click-by="(n) => name(n)"
+					color="#049"
+					:quantity="5"
+				></elementInventory>
+				<elementInventory
+					@click-by="(n) => name(n)"
+					color="#943"
+					:quantity="7"
+				></elementInventory>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+				<li class="board__item" v-for="i in 22" key="i"></li>
+			</ul>
+		</div>
+		<div class="inventory__message">
+			<div class="hide"></div>
+			<div class="position"><closeIcon></closeIcon></div>
+		</div>
+	</div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
