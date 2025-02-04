@@ -11,7 +11,8 @@ export default defineConfig({
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url))
 		}
-	}
+	},
+	base: "/rlt-tz/"
 	// css: {
 	// 	preprocessorOptions: {
 	// 		scss: {
