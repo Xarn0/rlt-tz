@@ -22,6 +22,7 @@ defineProps<{
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
 	&__content {
 		margin: 10px;
 		background: v-bind(color);
@@ -30,6 +31,7 @@ defineProps<{
 		width: 48px;
 		height: 48px;
 		align-self: center;
+		z-index: 0;
 	}
 	&__quantity {
 		align-self: end;
